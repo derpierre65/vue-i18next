@@ -45,6 +45,7 @@ export default {
           children.forEach(e => {
             if (
               !child &&
+              e.tag && // fixed elements where everything is undefined (something from vue)
               e.data.attrs &&
               e.data.attrs.place &&
               e.data.attrs.place === place
