@@ -42,7 +42,7 @@ export default {
         const place = match.trim();
         // eslint-disable-next-line no-restricted-globals
         if (isNaN(parseFloat(place)) || !isFinite(place)) {
-          children.forEach(e => {
+          children.forEach((e) => {
             if (
               !child &&
               e.tag && // fixed elements where everything is undefined (something from vue)
