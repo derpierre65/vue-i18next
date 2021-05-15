@@ -4,15 +4,15 @@ export default {
   props: {
     tag: {
       type: String,
-      default: 'span'
+      default: 'span',
     },
     path: {
       type: String,
-      required: true
+      required: true,
     },
     options: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   render(h, { props, data, children, parent }) {
     const i18next = parent.$i18n;
@@ -27,7 +27,7 @@ export default {
     const REGEXP = i18next.i18next.services.interpolator.regexp;
     const i18nextOptions = {
       ...options,
-      interpolation: { prefix: '#$?', suffix: '?$#' }
+      interpolation: { prefix: '#$?', suffix: '?$#' },
     };
     const format = $t(path, i18nextOptions);
     const tchildren = [];
@@ -46,6 +46,7 @@ export default {
             if (
               !child &&
               e.tag && // fixed elements where everything is undefined (something from vue)
+              e.data &&
               e.data.attrs &&
               e.data.attrs.place &&
               e.data.attrs.place === place
@@ -63,5 +64,5 @@ export default {
     }, tchildren);
 
     return h(props.tag, data, tchildren);
-  }
+  },
 };

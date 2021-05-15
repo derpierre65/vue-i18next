@@ -6,7 +6,7 @@ export default class VueI18n {
       bindI18n: 'languageChanged loaded',
       bindStore: 'added removed',
       loadComponentNamespace: false,
-      ...opts
+      ...opts,
     };
 
     this._vm = null;

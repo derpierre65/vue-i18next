@@ -1,12 +1,12 @@
-/* eslint-disable import/no-mutable-exports */
 import deepmerge from 'deepmerge';
 import component from './component';
 import directive from './directive';
 import waitDirective from './wait';
 
-export let Vue;
+// eslint-disable-next-line import/no-mutable-exports
+let Vue;
 
-export function install(_Vue) {
+function install(_Vue) {
   if (install.installed) {
     return;
   }
@@ -14,7 +14,7 @@ export function install(_Vue) {
 
   Vue = _Vue;
 
-  const getByKey = (i18nOptions, i18nextOptions) => key => {
+  const getByKey = (i18nOptions, i18nextOptions) => (key) => {
     if (
       i18nOptions &&
       i18nOptions.keyPrefix &&
@@ -25,17 +25,17 @@ export function install(_Vue) {
     return key;
   };
 
-  const getComponentNamespace = vm => {
+  const getComponentNamespace = (vm) => {
     const namespace = vm.$options.name || vm.$options._componentTag;
     if (namespace) {
       return {
         namespace,
-        loadNamespace: true
+        loadNamespace: true,
       };
     }
 
     return {
-      namespace: `${Math.random()}`
+      namespace: `${Math.random()}`,
     };
   };
 
@@ -55,7 +55,7 @@ export function install(_Vue) {
         const { namespace, loadNamespace } = getNamespace(this);
 
         if (options.__i18n) {
-          options.__i18n.forEach(resource => {
+          options.__i18n.forEach((resource) => {
             inlineTranslations = deepmerge(
               inlineTranslations,
               JSON.parse(resource)
@@ -67,7 +67,7 @@ export function install(_Vue) {
           const {
             lng = null,
             keyPrefix = null,
-            messages
+            messages,
           } = this.$options.i18nOptions;
           let { namespaces } = this.$options.i18nOptions;
           namespaces = namespaces || this._i18n.i18next.options.defaultNS;
@@ -85,7 +85,7 @@ export function install(_Vue) {
           this._i18nOptions = { ...options.parent._i18nOptions };
           this._i18nOptions.namespaces = [
             namespace,
-            ...this._i18nOptions.namespaces
+            ...this._i18nOptions.namespaces,
           ];
         } else if (options.__i18n) {
           this._i18nOptions = { namespaces: [namespace] };
@@ -96,7 +96,7 @@ export function install(_Vue) {
         }
 
         const languages = Object.keys(inlineTranslations);
-        languages.forEach(lang => {
+        languages.forEach((lang) => {
           this._i18n.i18next.addResourceBundle(
             lang,
             namespace,
@@ -122,7 +122,7 @@ export function install(_Vue) {
         this._getI18nKey = (key, i18nextOptions) =>
           this._i18n.t(getKey(key), i18nextOptions, this._i18n.i18nLoadedAt);
       }
-    }
+    },
   });
 
   // extend Vue.js
@@ -130,7 +130,7 @@ export function install(_Vue) {
     Object.defineProperty(Vue.prototype, '$i18n', {
       get() {
         return this._i18n;
-      }
+      },
     });
   }
 
@@ -142,3 +142,5 @@ export function install(_Vue) {
   Vue.directive('t', directive);
   Vue.directive('waitForT', waitDirective);
 }
+
+export { install, Vue };

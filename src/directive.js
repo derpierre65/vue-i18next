@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign, no-unused-vars */
-
 import { warn, deprecate } from './utils';
 
 function equalLanguage(el, vnode) {
@@ -65,11 +63,13 @@ function t(el, binding, vnode) {
   }
 
   const vm = vnode.context;
+  // eslint-disable-next-line no-param-reassign
   el.textContent = vm.$i18n.i18next.t(path, {
     ...(language ? { lng: language } : {}),
-    ...args
+    ...args,
   });
 
+  // eslint-disable-next-line no-param-reassign
   el._i18nLanguage = vm.$i18n.i18next.language;
 }
 
@@ -81,7 +81,7 @@ export function bind(el, binding, vnode) {
   t(el, binding, vnode);
 }
 
-export function update(el, binding, vnode, oldVNode) {
+export function update(el, binding, vnode) {
   if (equalLanguage(el, vnode) && equalValue(binding.value, binding.oldValue)) {
     return;
   }
@@ -91,5 +91,5 @@ export function update(el, binding, vnode, oldVNode) {
 
 export default {
   bind,
-  update
+  update,
 };

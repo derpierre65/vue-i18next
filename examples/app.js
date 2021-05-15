@@ -76,7 +76,7 @@ Vue.component('language-changer', {
 Vue.component('load-bundle', {
   template: `
     <div>
-      <a v-on:click="loadBundle">{{$t("loadbundle", {lang: this.lang}) }}</a>
+      <a v-on:click="loadBundle">{{$t("loadbundle", {lng: this.lang}) }}</a>
     </div>`,
   data() {
     return {
